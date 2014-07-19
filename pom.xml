@@ -107,6 +107,13 @@
                 <scope>runtime</scope>
             </dependency>
 
+
+            <!-- Hibernate Validator - especially for MVC validations: implementation for JSR 303 - Bean Validation -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>5.1.0.Final</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>

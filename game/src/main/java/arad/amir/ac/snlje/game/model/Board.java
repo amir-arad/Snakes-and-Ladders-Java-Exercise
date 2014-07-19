@@ -17,4 +17,27 @@ public class Board {
     private List<Cell> cells;
     private Collection<Passage> passages;
 
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public List<Cell> getCells() {
+        return cells;
+    }
+
+    public void setCells(List<Cell> cells) {
+        this.cells = cells;
+    }
+
+    public Collection<Passage> getPassages() {
+        return passages;
+    }
+
+    public void setPassages(Collection<Passage> passages) {
+        this.passages = passages;
+    }
 }
