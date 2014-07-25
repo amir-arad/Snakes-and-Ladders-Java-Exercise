@@ -1,5 +1,8 @@
 package arad.amir.ac.snlje.game.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,5 +55,47 @@ public class Game {
 
     public void setNumberOfSoldiersToWin(int numberOfSoldiersToWin) {
         this.numberOfSoldiersToWin = numberOfSoldiersToWin;
+    }
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Game rhs = (Game) obj;
+        return new EqualsBuilder()
+                .append(this.players, rhs.players)
+                .append(this.board, rhs.board)
+                .append(this.currentTurn, rhs.currentTurn)
+                .append(this.numberOfSoldiersToWin, rhs.numberOfSoldiersToWin)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(players)
+                .append(board)
+                .append(currentTurn)
+                .append(numberOfSoldiersToWin)
+                .toHashCode();
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("players", players)
+                .append("board", board)
+                .append("currentTurn", currentTurn)
+                .append("numberOfSoldiersToWin", numberOfSoldiersToWin)
+                .toString();
     }
 }

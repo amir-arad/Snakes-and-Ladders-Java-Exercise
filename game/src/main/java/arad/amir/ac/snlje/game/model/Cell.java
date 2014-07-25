@@ -1,5 +1,8 @@
 package arad.amir.ac.snlje.game.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,26 +33,33 @@ public class Cell {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cell)) return false;
-
-        Cell cell = (Cell) o;
-
-        if (index != cell.index) return false;
-
-        return true;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Cell rhs = (Cell) obj;
+        return new EqualsBuilder()
+                .append(this.index, rhs.index)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return index;
+        return new HashCodeBuilder()
+                .append(index)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Cell{" +
-                "index=" + index +
-                '}';
+        return new ToStringBuilder(this)
+                .append("index", index)
+                .toString();
     }
 }

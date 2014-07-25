@@ -1,5 +1,8 @@
 package arad.amir.ac.snlje.game.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,19 +45,40 @@ public class Player {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Player)) return false;
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("name", name)
+                .append("type", type)
+                .append("soldierPositions", soldierPositions)
+                .toString();
+    }
 
-        Player player = (Player) o;
-
-        if (!name.equals(player.name)) return false;
-
-        return true;
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Player rhs = (Player) obj;
+        return new EqualsBuilder()
+                .append(this.name, rhs.name)
+                .append(this.type, rhs.type)
+                .append(this.soldierPositions, rhs.soldierPositions)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return new HashCodeBuilder()
+                .append(name)
+                .append(type)
+                .append(soldierPositions)
+                .toHashCode();
     }
+
 }

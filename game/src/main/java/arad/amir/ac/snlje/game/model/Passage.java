@@ -1,5 +1,8 @@
 package arad.amir.ac.snlje.game.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -78,34 +81,43 @@ public class Passage {
         }
     }
 
+
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Passage)) return false;
-
-        Passage passage = (Passage) o;
-
-        if (!from.equals(passage.from)) return false;
-        if (!to.equals(passage.to)) return false;
-        if (type != passage.type) return false;
-
-        return true;
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Passage rhs = (Passage) obj;
+        return new EqualsBuilder()
+                .append(this.type, rhs.type)
+                .append(this.from, rhs.from)
+                .append(this.to, rhs.to)
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        int result = type.hashCode();
-        result = 31 * result + from.hashCode();
-        result = 31 * result + to.hashCode();
-        return result;
+        return new HashCodeBuilder()
+                .append(type)
+                .append(from)
+                .append(to)
+                .toHashCode();
     }
 
     @Override
     public String toString() {
-        return "Passage{" +
-                "type=" + type +
-                ", from=" + from +
-                ", to=" + to +
-                '}';
+        return new ToStringBuilder(this)
+                .append("type", type)
+                .append("from", from)
+                .append("to", to)
+                .toString();
     }
+
+
 }

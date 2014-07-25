@@ -1,5 +1,8 @@
 package arad.amir.ac.snlje.game.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,5 +45,42 @@ public class Board {
 
     public void setPassages(Collection<Passage> passages) {
         this.passages = passages;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj == this) {
+            return true;
+        }
+        if (obj.getClass() != getClass()) {
+            return false;
+        }
+        Board rhs = (Board) obj;
+        return new EqualsBuilder()
+                .append(this.size, rhs.size)
+                .append(this.cells, rhs.cells)
+                .append(this.passages, rhs.passages)
+                .isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder()
+                .append(size)
+                .append(cells)
+                .append(passages)
+                .toHashCode();
+    }
+
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("size", size)
+                .append("passages", passages)
+                .toString();
     }
 }
