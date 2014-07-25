@@ -13,6 +13,9 @@ import java.util.List;
 public class Board {
     private static final Logger log = LoggerFactory.getLogger(Board.class);
 
+    public static final int MIN_SIZE = 5;
+    public static final int MAX_SIZE = 8;
+
     private int size;
     private List<Cell> cells;
     private Collection<Passage> passages;

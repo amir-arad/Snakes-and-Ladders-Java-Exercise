@@ -29,6 +29,7 @@ public class Passage {
 
     public void setFrom(Cell from) {
         this.from = from;
+        from.setToPassage(this);
     }
 
     public Cell getTo() {
@@ -53,6 +54,28 @@ public class Passage {
             case LADDER: return from;
         }
         throw new IllegalArgumentException("unexpected type : " + type);
+    }
+
+    public void setHigh(Cell high) {
+        switch (type){
+            case SNAKE: setFrom(high);
+                break;
+            case LADDER: setTo(high);
+                break;
+            default:
+                throw new IllegalArgumentException("unexpected type : " + type);
+        }
+    }
+
+    public void setLow(Cell low) {
+        switch (type){
+            case LADDER: setFrom(low);
+                break;
+            case SNAKE: setTo(low);
+                break;
+            default:
+                throw new IllegalArgumentException("unexpected type : " + type);
+        }
     }
 
     @Override

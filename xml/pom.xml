@@ -13,7 +13,24 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
+            <artifactId>game</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
+            <artifactId>game</artifactId>
+            <type>test-jar</type>
+        </dependency>
 
+        <dependency>
+            <groupId>net.sf.dozer</groupId>
+            <artifactId>dozer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

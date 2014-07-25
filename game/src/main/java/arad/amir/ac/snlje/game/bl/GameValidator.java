@@ -1,9 +1,6 @@
-package arad.amir.ac.snlje.game.validation;
+package arad.amir.ac.snlje.game.bl;
 
-import arad.amir.ac.snlje.game.model.Cell;
-import arad.amir.ac.snlje.game.model.Game;
-import arad.amir.ac.snlje.game.model.Passage;
-import arad.amir.ac.snlje.game.model.Player;
+import arad.amir.ac.snlje.game.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +37,12 @@ public class GameValidator{
         if (game.getBoard() == null){
             errors.add("no board object defined");
         } else {
+            int size = game.getBoard().getSize();
+            if (size > Board.MAX_SIZE){
+                errors.add("bad board size: too high " + size);
+            } else if (size < Board.MIN_SIZE){
+                errors.add("bad board size: too low " + size);
+            }
             validateNumberOfCells(game, errors);
             validatePassages(game, errors);
         }
@@ -48,11 +51,15 @@ public class GameValidator{
     private void validatePassages(Game game, Collection<String> errors) {
         Set<Passage> snakes = new HashSet<>();
         Set<Passage> ladders = new HashSet<>();
+        Set<Cell> pasageEdges = new HashSet<>(game.getBoard().getPassages().size() * 2);
         for (Passage passage : game.getBoard().getPassages()) {
-            Set<Passage> collection = getPassagesCollection(snakes, ladders, passage);
-            validatePassage(errors, passage, collection);
+            Set<Passage> typeCollection = getPassageTypeCollection(snakes, ladders, passage);
+            validatePassage(errors, passage, typeCollection, pasageEdges, game.getBoard().getCells().size());
             if (!game.getBoard().getCells().contains(passage.getFrom())){
-                errors.add("passage refers to a cell not referenced by the board");
+                errors.add("passage starts in a cell not referenced by the board");
+            }
+            if (!game.getBoard().getCells().contains(passage.getTo())){
+                errors.add("passage leads to a cell not referenced by the board (redundant check)");
             }
         }
         if (snakes.size() != ladders.size()){
@@ -70,7 +77,7 @@ public class GameValidator{
         }
         Passage toPassage = cell.getToPassage();
         if (toPassage != null){
-            Set<Passage> collection = getPassagesCollection(snakes, ladders, toPassage);
+            Set<Passage> collection = getPassageTypeCollection(snakes, ladders, toPassage);
             if (!collection.remove(toPassage)){
                 errors.add("toPassage referenced by two cells or not referenced by board : " + toPassage);
             }
@@ -81,21 +88,49 @@ public class GameValidator{
         return idx;
     }
 
-    private void validatePassage(Collection<String> errors, Passage passage, Set<Passage> collection) {
-        if (!collection.add(passage)){
+    private void validatePassage(Collection<String> errors, Passage passage, Set<Passage> typeCollection, Set<Cell> pasageEdges, int numOfCells) {
+        if (!typeCollection.add(passage)){
             errors.add("duplicate passage found : " + passage);
         }
+        boolean missingEnd = false;
         if (passage.getTo() == null){
+            missingEnd = true;
             errors.add("passage with no destination : " + passage);
+        } else {
+            if (!pasageEdges.add(passage.getTo())){
+                errors.add("passage leads to a cell with another passage edge : " + passage.getTo());
+            }
+            if (passage.getTo().getIndex() == numOfCells - 1){
+                errors.add("passage leads to the last cell : " + passage);
+            }
+            if (passage.getTo().getIndex() == 0){
+                errors.add("passage leads to the first cell : " + passage);
+            }
         }
         if (passage.getFrom() == null){
+            missingEnd = true;
             errors.add("passage with no source : " + passage);
-        } else if (passage.getFrom().getToPassage() != passage){
-            errors.add("passage with no reference from source : " + passage + ", " + passage.getFrom());
+        } else {
+            if (passage.getFrom().getToPassage() != passage){
+                errors.add("passage with no reference from source : " + passage + ", " + passage.getFrom());
+            }
+            if (passage.getFrom().equals(passage.getTo())){
+                errors.add("passage leads from and to the same cell : " + passage);
+            }
+
+            if (passage.getFrom().getIndex() == numOfCells - 1){
+                errors.add("passage starts in the last cell : " + passage);
+            }
+            if (passage.getFrom().getIndex() == 0){
+                errors.add("passage starts in the first cell : " + passage);
+            }
+        }
+        if (!missingEnd && passage.getHigh().getIndex() < passage.getLow().getIndex()){
+            errors.add("passage from and to cells are inverted : " + passage);
         }
     }
 
-    private Set<Passage> getPassagesCollection(Set<Passage> snakes, Set<Passage> ladders, Passage passage) {
+    private Set<Passage> getPassageTypeCollection(Set<Passage> snakes, Set<Passage> ladders, Passage passage) {
         switch (passage.getType()){
             case SNAKE: return snakes;
             case LADDER: return ladders;
@@ -131,7 +166,7 @@ public class GameValidator{
             if (player.getSoldierPositions() == null){
                 errors.add("null soldiers for player " + player.getName());
             } else {
-                if (player.getSoldierPositions().size() != Game.NUMBER_OF_SOLIDERS){
+                if (player.getSoldierPositions().size() != Game.NUMBER_OF_SOLDIERS){
                     errors.add("bad number of soldiers for player: " + player);
                 }
                 for (Cell cell : player.getSoldierPositions()) {

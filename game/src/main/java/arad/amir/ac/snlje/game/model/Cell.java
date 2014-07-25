@@ -50,7 +50,6 @@ public class Cell {
     public String toString() {
         return "Cell{" +
                 "index=" + index +
-                ", toPassage=" + toPassage +
                 '}';
     }
 }

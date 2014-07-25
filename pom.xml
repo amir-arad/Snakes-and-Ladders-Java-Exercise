@@ -32,6 +32,24 @@
                         <encoding>UTF-8</encoding>
                     </configuration>
                 </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-source-plugin</artifactId>
+                    <executions>
+                        <execution>
+                            <id>attach-sources</id>
+                            <goals>
+                                <goal>jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>attach-test-sources</id>
+                            <goals>
+                                <goal>test-jar-no-fork</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
             </plugins>
         </pluginManagement>
     </build>
@@ -57,6 +75,33 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--Internal modules-->
+            <dependency>
+                <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
+                <artifactId>game</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
+                <artifactId>game</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
+                <artifactId>xml</artifactId>
+                <version>${project.version}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
+                <artifactId>xml</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
+
 
             <!--
                 Provides a runtime binding framework for client applications including unmarshalling, marshalling, and validation capabilities
@@ -107,13 +152,22 @@
                 <scope>runtime</scope>
             </dependency>
 
-
-            <!-- Hibernate Validator - especially for MVC validations: implementation for JSR 303 - Bean Validation -->
+            <!--Bean mapping-->
             <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-validator</artifactId>
-                <version>5.1.0.Final</version>
+                <groupId>net.sf.dozer</groupId>
+                <artifactId>dozer</artifactId>
+                <version>5.5.1</version>
             </dependency>
+
+
+            <!-- JUnit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 </project>

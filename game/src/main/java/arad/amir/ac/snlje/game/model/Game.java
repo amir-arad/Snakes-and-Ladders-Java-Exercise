@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Game {
     private static final Logger log = LoggerFactory.getLogger(Game.class);
-    public static final int NUMBER_OF_SOLIDERS = 4;
+    public static final int NUMBER_OF_SOLDIERS = 4;
     public static final int MIN_WINNING_CONDITION = 1;
     public static final int MAX_WINNING_CONDITION = 4;
     public static final int MIN_NUM_OF_PLAYERS = 2;
