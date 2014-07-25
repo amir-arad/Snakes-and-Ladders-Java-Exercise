@@ -128,21 +128,22 @@ public class GameValidator{
             if (player.getName() == null || player.getName().isEmpty()){
                 errors.add("nameless player");
             }
-            if (player.getSoliderPositions() == null){
-                errors.add("null soliders for player " + player.getName());
+            if (player.getSoldierPositions() == null){
+                errors.add("null soldiers for player " + player.getName());
             } else {
-                if (player.getSoliderPositions().size() != Game.NUMBER_OF_SOLIDERS){
-                    errors.add("bad number of soliders for player: " + player);
+                if (player.getSoldierPositions().size() != Game.NUMBER_OF_SOLIDERS){
+                    errors.add("bad number of soldiers for player: " + player);
                 }
-                for (Cell cell : player.getSoliderPositions()) {
+                for (Cell cell : player.getSoldierPositions()) {
                     if (cell == null){
-                        errors.add("bad number of soliders for player: " + player);
+                        errors.add("bad number of soldiers for player: " + player);
+                    }
+                    if (!game.getBoard().getCells().contains(cell)){
+                        errors.add("solider on cell not from this board: " + cell);
                     }
                 }
-
             }
         }
-
     }
 
 

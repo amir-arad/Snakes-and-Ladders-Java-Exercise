@@ -15,7 +15,7 @@ public class Player {
 
     private String name;
     private Type type;
-    private List<Cell> soliderPositions;
+    private List<Cell> soldierPositions;
 
     public String getName() {
         return name;
@@ -33,12 +33,12 @@ public class Player {
         this.type = type;
     }
 
-    public List<Cell> getSoliderPositions() {
-        return soliderPositions;
+    public List<Cell> getSoldierPositions() {
+        return soldierPositions;
     }
 
-    public void setSoliderPositions(List<Cell> soliderPositions) {
-        this.soliderPositions = soliderPositions;
+    public void setSoldierPositions(List<Cell> soldierPositions) {
+        this.soldierPositions = soldierPositions;
     }
 
     @Override
