@@ -131,11 +131,15 @@ public class GameValidator{
             if (player.getSoliderPositions() == null){
                 errors.add("null soliders for player " + player.getName());
             } else {
-                if (numberOfPlayers > Game.MAX_NUM_OF_PLAYERS){
-                    errors.add("bad number of players: too high " + numberOfPlayers);
-                } else if (numberOfPlayers < Game.MIN_NUM_OF_PLAYERS){
-                    errors.add("bad number of players: too low " + numberOfPlayers);
+                if (player.getSoliderPositions().size() != Game.NUMBER_OF_SOLIDERS){
+                    errors.add("bad number of soliders for player: " + player);
                 }
+                for (Cell cell : player.getSoliderPositions()) {
+                    if (cell == null){
+                        errors.add("bad number of soliders for player: " + player);
+                    }
+                }
+
             }
         }
 

@@ -57,7 +57,7 @@
     </xs:complexType>
     
     <xs:complexType name="ladders">
-        <xs:sequence maxOccurs="32" >
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
             <xs:element name="ladder">
                 <xs:complexType>
                     <xs:attributeGroup ref="passage"/>
@@ -66,7 +66,7 @@
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="snakes">
-        <xs:sequence maxOccurs="32">
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
             <xs:element name="snake">
                 <xs:complexType>
                     <xs:attributeGroup ref="passage"/>

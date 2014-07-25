@@ -17,9 +17,11 @@
         </cells>
         <ladders>
             <ladder from="4" to="9"/>
+            <ladder from="6" to="13"/>
         </ladders>
         <snakes>
             <snake from="6" to="3"/>
+            <snake from="14" to="7"/>
         </snakes>
     </board>
 </snakesandladders>
