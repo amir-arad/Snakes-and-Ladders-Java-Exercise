@@ -172,9 +172,13 @@ public class GameValidator{
                 for (Cell cell : player.getSoldierPositions()) {
                     if (cell == null){
                         errors.add("bad number of soldiers for player: " + player);
-                    }
-                    if (!game.getBoard().getCells().contains(cell)){
-                        errors.add("solider on cell not from this board: " + cell);
+                    } else {
+                        if (!game.getBoard().getCells().contains(cell)) {
+                            errors.add(player.getName() +"'s solider on cell not from this board: " + cell);
+                        }
+                        if (cell.getToPassage() != null) {
+                            errors.add(player.getName() +"'s solider on cell that leads to a " + cell.getToPassage().getType().toString().toLowerCase() + " : " + cell);
+                        }
                     }
                 }
             }

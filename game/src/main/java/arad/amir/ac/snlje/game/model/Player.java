@@ -21,6 +21,14 @@ public class Player {
     private Type type;
     private Collection<Cell> soldierPositions;
 
+    public Player() {
+    }
+
+    public Player(String name, Type type) {
+        this.name = name;
+        this.type = type;
+    }
+
     public String getName() {
         return name;
     }

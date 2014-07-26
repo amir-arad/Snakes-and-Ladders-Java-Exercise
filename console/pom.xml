@@ -19,8 +19,16 @@
         </dependency>
         <dependency>
             <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
+            <artifactId>xml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>arad.amir.ac.Snakes-and-Ladders-Java-Exercise</groupId>
             <artifactId>game</artifactId>
             <type>test-jar</type>
+        </dependency>
+        <dependency>
+            <groupId>jline</groupId>
+            <artifactId>jline</artifactId>
         </dependency>
     </dependencies>
 

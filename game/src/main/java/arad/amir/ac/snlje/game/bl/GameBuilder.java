@@ -38,6 +38,25 @@ public class GameBuilder {
         this.players = players;
     }
 
+    public int getBoardSize() {
+        return boardSize;
+    }
+
+    public int getNumOfPassages() {
+        return numOfPassages;
+    }
+
+    public int getWinningCondition() {
+        return winningCondition;
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public boolean isNewGame() {
+        return newGame;
+    }
 
     public Game build() {
         int numOfCells = this.boardSize * boardSize;

@@ -21,6 +21,7 @@ public class Game {
     public static final int MIN_NUM_OF_PLAYERS = 2;
     public static final int MAX_NUM_OF_PLAYERS = 4;
 
+
     private List<Player> players;
     private Board board;
     private int currentTurn;
@@ -57,8 +58,6 @@ public class Game {
     public void setNumberOfSoldiersToWin(int numberOfSoldiersToWin) {
         this.numberOfSoldiersToWin = numberOfSoldiersToWin;
     }
-
-
 
     @Override
     public boolean equals(Object obj) {
