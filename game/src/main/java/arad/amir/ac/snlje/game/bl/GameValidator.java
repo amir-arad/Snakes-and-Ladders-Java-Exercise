@@ -100,7 +100,7 @@ public class GameValidator{
             if (!pasageEdges.add(passage.getTo())){
                 errors.add("passage leads to a cell with another passage edge : " + passage.getTo());
             }
-            if (passage.getTo().getIndex() == numOfCells - 1){
+            if (passage.getTo().getNumber() == numOfCells){
                 errors.add("passage leads to the last cell : " + passage);
             }
             if (passage.getTo().getIndex() == 0){
@@ -118,7 +118,7 @@ public class GameValidator{
                 errors.add("passage leads from and to the same cell : " + passage);
             }
 
-            if (passage.getFrom().getIndex() == numOfCells - 1){
+            if (passage.getFrom().getNumber() == numOfCells){
                 errors.add("passage starts in the last cell : " + passage);
             }
             if (passage.getFrom().getIndex() == 0){

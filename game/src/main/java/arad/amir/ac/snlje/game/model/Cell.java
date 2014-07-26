@@ -25,6 +25,14 @@ public class Cell {
         this.index = index;
     }
 
+    public int getNumber() {
+        return index + 1;
+    }
+
+    public void setNumber(int number) {
+        this.index = number - 1;
+    }
+
     public Passage getToPassage() {
         return toPassage;
     }

@@ -62,21 +62,21 @@ public class Bl2XmlMapper {
 
     private Ladders.Ladder convertLadder(Passage source) {
         Ladders.Ladder result = new Ladders.Ladder();
-        result.setFrom(convertCellId(source.getFrom().getIndex()));
-        result.setTo(convertCellId(source.getTo().getIndex()));
+        result.setFrom(BigInteger.valueOf(source.getFrom().getNumber()));
+        result.setTo(BigInteger.valueOf(source.getTo().getNumber()));
         return result;
     }
 
     private Snakes.Snake convertSnake(Passage source) {
         Snakes.Snake result = new Snakes.Snake();
-        result.setFrom(convertCellId(source.getFrom().getIndex()));
-        result.setTo(convertCellId(source.getTo().getIndex()));
+        result.setFrom( BigInteger.valueOf((source.getFrom().getNumber())));
+        result.setTo( BigInteger.valueOf((source.getTo().getNumber())));
         return result;
     }
 
     private arad.amir.ac.snlje.xml.model.Cell convertCell(Cell source) {
         arad.amir.ac.snlje.xml.model.Cell result = new arad.amir.ac.snlje.xml.model.Cell();
-        result.setNumber(convertCellId(source.getIndex()));
+        result.setNumber(BigInteger.valueOf(source.getNumber()));
         // soldiers populated in convertCell
         return result;
     }
@@ -105,9 +105,5 @@ public class Bl2XmlMapper {
             soldiersList.add(soldiers);
         }
         return soldiers;
-    }
-
-    private BigInteger convertCellId(int source) {
-        return BigInteger.valueOf(source + 1);
     }
 }
