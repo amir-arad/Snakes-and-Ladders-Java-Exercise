@@ -1,12 +1,14 @@
 package arad.amir.ac.snlje.xml.mapper;
 
 import arad.amir.ac.snlje.game.model.*;
-import arad.amir.ac.snlje.game.model.Board;
-import arad.amir.ac.snlje.game.model.Cell;
-import arad.amir.ac.snlje.xml.model.*;
+import arad.amir.ac.snlje.xml.model.Ladders;
+import arad.amir.ac.snlje.xml.model.Players;
+import arad.amir.ac.snlje.xml.model.Snakes;
+import arad.amir.ac.snlje.xml.model.Snakesandladders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,47 +19,47 @@ import java.util.List;
 public class Xml2BlMapper {
     private static final Logger log = LoggerFactory.getLogger(Xml2BlMapper.class);
 
-
-    private Snakesandladders source;
-
-    private List<Cell> cells;
-    private List<Player> players;
-    private Game destination;
-
-    public Xml2BlMapper(Snakesandladders source) {
-        this.source = source;
-        this.destination = new Game();
-        cells = new ArrayList<>(source.getBoard().getCells().getCell().size());
-        players = new ArrayList<>(source.getPlayers().getPlayer().size());
-    }
-
-    public Game convert(){
-        destination.setNumberOfSoldiersToWin(source.getNumberOfSoldiers());
-        destination.setPlayers(players);
-        destination.setBoard(convertBoard());
-        destination.getBoard().setCells(cells);
-        destination.getBoard().setPassages(new ArrayList<Passage>(
+    public Game convert(Snakesandladders source){
+        Game result = new Game();
+        List<Cell> cells = makeCells(source.getBoard().getSize() * source.getBoard().getSize());
+        List<Player> players = new ArrayList<>(source.getPlayers().getPlayer().size());
+        result.setPlayers(players);
+        result.setBoard(convertBoard(source.getBoard()));
+        result.getBoard().setCells(cells);
+        result.setNumberOfSoldiersToWin(source.getNumberOfSoldiers());
+        result.getBoard().setPassages(new ArrayList<Passage>(
                 source.getBoard().getSnakes().getSnake().size() +
                         source.getBoard().getLadders().getLadder().size()));
         for (Players.Player player : source.getPlayers().getPlayer()) {
-            destination.getPlayers().add(convertPlayer(player));
+            result.getPlayers().add(convertPlayer(player));
         }
-        destination.setCurrentTurn(players.indexOf(getDestPlayerByName(source.getCurrentPlayer())));
+        result.setCurrentTurn(players.indexOf(getDestPlayerByName(source.getCurrentPlayer(), players)));
         for (arad.amir.ac.snlje.xml.model.Cell cell : source.getBoard().getCells().getCell()) {
-            destination.getBoard().getCells().add(convertCell(cell));
+            Cell destinationCell = cells.get(convertCellId(cell.getNumber()));
+            convertSoliders(players, destinationCell, cell.getSoldiers());
         }
         for (Snakes.Snake snake : source.getBoard().getSnakes().getSnake()) {
-            destination.getBoard().getPassages().add(convertSnake(snake));
+            result.getBoard().getPassages().add(convertSnake(snake, cells));
         }
         for (Ladders.Ladder ladder : source.getBoard().getLadders().getLadder()) {
-            destination.getBoard().getPassages().add(convertLadder(ladder));
+            result.getBoard().getPassages().add(convertLadder(ladder, cells));
         }
-        return destination;
+        return result;
     }
 
-    private Board convertBoard() {
+    private List<Cell> makeCells(int numOfCells) {
+        List<Cell> result = new ArrayList<>(numOfCells);
+        for (int i = 0; i < numOfCells; i++) {
+            Cell c = new Cell();
+            c.setIndex(i);
+            result.add(c);
+        }
+        return result;
+    }
+
+    private Board convertBoard(arad.amir.ac.snlje.xml.model.Board source) {
         Board result = new Board();
-        result.setSize(source.getBoard().getSize());
+        result.setSize(source.getSize());
         return result;
     }
 
@@ -65,23 +67,24 @@ public class Xml2BlMapper {
         Player result = new Player();
         result.setName(source.getName());
         result.setType(Player.Type.valueOf(source.getType().name()));
-        result.setSoldierPositions(new ArrayList<Cell>(Game.NUMBER_OF_SOLDIERS)); // populated in convertCell
+        result.setSoldierPositions(new ArrayList<Cell>(Game.NUMBER_OF_SOLDIERS)); // populated in convertSoliders
         return result;
     }
 
-    private Cell convertCell(arad.amir.ac.snlje.xml.model.Cell source) {
-        Cell result = new Cell();
-        result.setIndex(source.getNumber().intValue() - 1); // convert cell num to cell index
-        for (arad.amir.ac.snlje.xml.model.Cell.Soldiers soldiers : source.getSoldiers()) {
-            Player solidersPlayer = getDestPlayerByName(soldiers.getPlayerName());
+    private void convertSoliders(List<Player> players, Cell destinationCell, List<arad.amir.ac.snlje.xml.model.Cell.Soldiers> soldiersList) {
+        for (arad.amir.ac.snlje.xml.model.Cell.Soldiers soldiers : soldiersList) {
+            Player soldiersPlayer = getDestPlayerByName(soldiers.getPlayerName(), players);
             for (int i = 0; i < soldiers.getCount(); i++) {
-                solidersPlayer.getSoldierPositions().add(result);
+                soldiersPlayer.getSoldierPositions().add(destinationCell);
             }
         }
-        return result;
     }
 
-    private Player getDestPlayerByName(String playerName) {
+    private int convertCellId(BigInteger source) {
+        return source.intValue() - 1;
+    }
+
+    private Player getDestPlayerByName(String playerName, List<Player> players) {
         for (Player player : players) {
             if (player.getName().equals(playerName)){
                 return player;
@@ -90,15 +93,19 @@ public class Xml2BlMapper {
         throw new IllegalStateException("player should be present : '" + playerName + "' not in " + players);
     }
 
-    private Passage convertLadder(Ladders.Ladder source) {
+    private Passage convertLadder(Ladders.Ladder source, List<Cell> cells) {
         Passage passage = new Passage();
+        passage.setType(Passage.Type.LADDER);
+        passage.setFrom(cells.get(convertCellId(source.getFrom())));
+        passage.setTo(cells.get(convertCellId(source.getTo())));
         return passage;
     }
 
-    private Passage convertSnake(Snakes.Snake source) {
-        Passage result = new Passage();
-        return result;
+    private Passage convertSnake(Snakes.Snake source, List<Cell> cells) {
+        Passage passage = new Passage();
+        passage.setType(Passage.Type.SNAKE);
+        passage.setFrom(cells.get(convertCellId(source.getFrom())));
+        passage.setTo(cells.get(convertCellId(source.getTo())));
+        return passage;
     }
-
-
 }

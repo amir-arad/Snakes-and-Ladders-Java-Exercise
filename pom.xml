@@ -108,6 +108,20 @@
                 <version>3.3.2</version>
             </dependency>
 
+            <!--<dependency>-->
+                <!--<groupId>commons-collections</groupId>-->
+                <!--<artifactId>commons-collections</artifactId>-->
+                <!--<version>3.2.1</version>-->
+            <!--</dependency>-->
+
+            <dependency>
+                <groupId>net.sourceforge.collections</groupId>
+                <artifactId>collections-generic</artifactId>
+                <version>4.01</version>
+            </dependency>
+
+
+
 
             <!--
                 Provides a runtime binding framework for client applications including unmarshalling, marshalling, and validation capabilities
@@ -158,19 +172,20 @@
                 <scope>runtime</scope>
             </dependency>
 
-            <!--Bean mapping-->
-            <dependency>
-                <groupId>net.sf.dozer</groupId>
-                <artifactId>dozer</artifactId>
-                <version>5.5.1</version>
-            </dependency>
-
 
             <!-- JUnit -->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.11</version>
+                <scope>test</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>xmlunit</groupId>
+                <artifactId>xmlunit</artifactId>
+                <version>1.4</version>
                 <scope>test</scope>
             </dependency>
 

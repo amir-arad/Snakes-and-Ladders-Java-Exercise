@@ -3,6 +3,7 @@ package arad.amir.ac.snlje.game.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,8 +44,8 @@ public class Board {
         return passages;
     }
 
-    public void setPassages(Collection<Passage> passages) {
-        this.passages = passages;
+    public void setPassages(final Collection<Passage> passages) {
+        this.passages = new ElementsOnlyEqualityCollection<>(passages);
     }
 
     @Override
@@ -78,9 +79,10 @@ public class Board {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("size", size)
                 .append("passages", passages)
                 .toString();
     }
+
 }

@@ -19,9 +19,7 @@ public class JaxbIntegrationTest {
     @Test
     public void testSampleFile() throws Exception {
         JAXBContext jc = JAXBContext.newInstance(Snakesandladders.class);
-
         Unmarshaller unmarshaller = jc.createUnmarshaller();
-
         try (InputStream fis = getClass().getClassLoader().getResourceAsStream("snakesandladders.xml")) {
             System.out.println("Total file size to read (in bytes) : " + fis.available());
             JAXBElement<Snakesandladders> feed = unmarshaller.unmarshal(new StreamSource(fis), Snakesandladders.class);
@@ -34,6 +32,5 @@ public class JaxbIntegrationTest {
             log.error("CodeGenerator error", e);
             throw e;
         }
-
     }
 }

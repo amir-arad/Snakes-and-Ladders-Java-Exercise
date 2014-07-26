@@ -3,10 +3,11 @@ package arad.amir.ac.snlje.game.model;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.util.Collection;
 
 /**
  * @author amira
@@ -18,7 +19,7 @@ public class Player {
 
     private String name;
     private Type type;
-    private List<Cell> soldierPositions;
+    private Collection<Cell> soldierPositions;
 
     public String getName() {
         return name;
@@ -36,17 +37,17 @@ public class Player {
         this.type = type;
     }
 
-    public List<Cell> getSoldierPositions() {
+    public Collection<Cell> getSoldierPositions() {
         return soldierPositions;
     }
 
-    public void setSoldierPositions(List<Cell> soldierPositions) {
-        this.soldierPositions = soldierPositions;
+    public void setSoldierPositions(Collection<Cell> soldierPositions) {
+        this.soldierPositions = new ElementsOnlyEqualityCollection<>(soldierPositions);
     }
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
+        return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
                 .append("name", name)
                 .append("type", type)
                 .append("soldierPositions", soldierPositions)
