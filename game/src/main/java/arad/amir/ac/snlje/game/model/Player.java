@@ -45,6 +45,16 @@ public class Player {
         this.soldierPositions = new ElementsOnlyEqualityCollection<>(soldierPositions);
     }
 
+    public int getSolidersCountInCell(Cell cell){
+        int result = 0;
+        for (Cell c : soldierPositions) {
+            if (c.equals(cell)){
+                result++;
+            }
+        }
+        return result;
+    }
+
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)

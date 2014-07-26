@@ -22,12 +22,10 @@
             <artifactId>game</artifactId>
             <type>test-jar</type>
         </dependency>
-
         <dependency>
             <groupId>xmlunit</groupId>
             <artifactId>xmlunit</artifactId>
         </dependency>
-
     </dependencies>
 
 </project>

@@ -22,12 +22,6 @@
             <artifactId>game</artifactId>
             <type>test-jar</type>
         </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-        </dependency>
-
     </dependencies>
 
 </project>
