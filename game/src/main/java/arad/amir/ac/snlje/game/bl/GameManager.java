@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * @author amira
@@ -43,9 +44,11 @@ public class GameManager {
 
     public Collection<Integer> getCurrentPlayerSoliderCellIndexes(){
         Player player = getCurrentPlayer();
-        Collection<Integer> result = new HashSet<>(player.getSoldierPositions().size());
+        Set<Integer> result = new HashSet<>(player.getSoldierPositions().size());
         for (Cell cell : player.getSoldierPositions()) {
-            result.add(cell.getIndex());
+            if (cell.getNumber() != lastCellNumber) {
+                result.add(cell.getIndex());
+            }
         }
         return result;
     }
