@@ -3,7 +3,7 @@ package arad.amir.ac.snlje.xml;
 import arad.amir.ac.snlje.game.bl.GameBuilderTest;
 import arad.amir.ac.snlje.game.model.Game;
 import arad.amir.ac.snlje.xml.model.Snakesandladders;
-import org.dozer.MyMapper;
+import org.dozer.DozerBeanMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * @author amira
@@ -24,7 +25,7 @@ public class ComponentTest {
 
     @Test
     public void testHappyFlow() throws Exception {
-        MyMapper mapper = new MyMapper();
+        DozerBeanMapper mapper = new DozerBeanMapper(Arrays.asList("dozerBeanMapping.xml"));
         JAXBContext jc = JAXBContext.newInstance(Snakesandladders.class);
         File tempFile = File.createTempFile("JaxB", "ComponentTest");
         tempFile.deleteOnExit();
