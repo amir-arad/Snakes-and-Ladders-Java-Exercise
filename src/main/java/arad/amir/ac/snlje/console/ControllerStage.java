@@ -243,7 +243,7 @@ enum ControllerStage {
                 if (passageUsed != null){
                     session.getDisplayer().printLine(
                             player.getName() + "'s soldier passed through a " + passageUsed.getType().toString().toLowerCase()
-                            + " and landed in " + passageUsed.getTo().getNumber());
+                                    + " and landed in " + passageUsed.getTo().getNumber());
                 }
                 // session.getDisplayer().printGame(session.getGame());
                 session.getDisplayer().pause();

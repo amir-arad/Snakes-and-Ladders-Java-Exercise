@@ -41,7 +41,7 @@ public class Displayer {
                 return result;
             }
         } catch(InputMismatchException e){}
-        System.out.print("please choose a valid number");
+        System.out.println("please choose a valid number");
         return inputInteger(message, min, max);
     }
 
