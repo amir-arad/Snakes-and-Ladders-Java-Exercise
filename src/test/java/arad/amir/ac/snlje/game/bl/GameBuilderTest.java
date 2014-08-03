@@ -31,6 +31,16 @@ public class GameBuilderTest {
         log.debug("done");
     }
 
+
+    @Test
+    public void testValidSampleXml() throws Exception {
+        log.debug("starting");
+        for (int i = 0; i < 10000; i++) {
+            testValidGame(buildRandomGame(false));
+        }
+        log.debug("done");
+    }
+
     private void testValidGame(Game game) {
         GameValidator validator = new GameValidator();
         Collection<String> strings = validator.validateGame(game);

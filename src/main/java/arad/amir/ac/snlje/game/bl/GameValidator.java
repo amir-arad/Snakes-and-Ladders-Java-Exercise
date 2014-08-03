@@ -111,6 +111,9 @@ public class GameValidator{
             missingEnd = true;
             errors.add("passage with no source : " + passage);
         } else {
+            if (!pasageEdges.add(passage.getFrom())){
+                errors.add("passage leads from a cell with another passage edge : " + passage.getFrom());
+            }
             if (passage.getFrom().getToPassage() != passage){
                 errors.add("passage with no reference from source : " + passage + ", " + passage.getFrom());
             }
