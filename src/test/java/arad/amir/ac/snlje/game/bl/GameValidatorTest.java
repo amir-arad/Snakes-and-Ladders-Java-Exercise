@@ -34,14 +34,24 @@ public class GameValidatorTest {
     }
 
 
-    private void testValidGame(Game game) {
-        GameValidator validator = new GameValidator();
-        Collection<String> strings = validator.validateGame(game);
-        if (!strings.isEmpty()){
-            for (String string : strings) {
-                log.error(string);
+
+    static void testValidGame(Game game) {
+        GameValidator.validateGame(game, new ControllerSession() {
+            @Override
+            public void printErrors(String error, Collection<String> errors) {
+                for (String string : errors) {
+                    log.error(string);
+                }
+                Assert.fail("validation failed : " + errors);
             }
-            Assert.fail("validation failed : " + strings);
-        }
+
+            @Override
+            public void printNewError(String error) {
+                Assert.fail("validation failed : " + error);
+            }
+
+            @Override
+            public void clearError() {}
+        });
     }
 }

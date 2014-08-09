@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="box" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="120.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arad.amir.ac.snlje.windowed.controllers.AboutController">
+    <children>
+        <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="87.0" prefWidth="80.0" text="This game is the second assignment in a Java course." textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="62.0">
+            <font>
+                <Font name="System Bold" size="12.0">
+                </Font>
+            </font>
+        </Label>
+        <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onClose" text="Close" textAlignment="CENTER" AnchorPane.bottomAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+    </children>
+</VBox>

@@ -1,11 +1,13 @@
 package arad.amir.ac.snlje.console;
 
+import arad.amir.ac.snlje.game.bl.ControllerSession;
 import arad.amir.ac.snlje.game.model.Cell;
 import arad.amir.ac.snlje.game.model.Game;
 import arad.amir.ac.snlje.game.model.Player;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collection;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -14,10 +16,29 @@ import java.util.Scanner;
  * @author amira
  * @since 26/07/2014
  */
-public class Displayer {
+public class Displayer implements ControllerSession {
     private static final Logger log = LoggerFactory.getLogger(Displayer.class);
 
     private Scanner scanner = new Scanner(System.in);
+
+    @Override
+    public void printErrors(String title, Collection<String> errors) {
+        printTitle("ERROR! " + title);
+        for (String error : errors) {
+            printLine(error);
+        }
+        pause();
+    }
+
+    @Override
+    public void printNewError(String error){
+        printTitle("ERROR! "+error);
+    }
+
+    @Override
+    public void clearError(){
+        printTitle("");
+    }
 
 
     public void pause() {
@@ -41,7 +62,7 @@ public class Displayer {
                 return result;
             }
         } catch(InputMismatchException e){}
-        System.out.println("please choose a valid number");
+        printNewError("please choose a valid number");
         return inputInteger(message, min, max);
     }
 

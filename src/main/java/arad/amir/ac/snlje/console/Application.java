@@ -1,5 +1,6 @@
 package arad.amir.ac.snlje.console;
 
+import arad.amir.ac.snlje.game.bl.GameSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,15 +13,14 @@ public class Application {
     public static final String WELCOME_MSG = "Welcome to Snakes and Ladders!";
 
     public static void main(String[] args) {
-        ControllerSession session = new ControllerSession();
-        session.setDisplayer(new Displayer());
+        GameSession<Displayer> session = new GameSession<>(new Displayer());
         ControllerStage stage = ControllerStage.CHOOSE_GAME;
-        session.getDisplayer().printTitle(WELCOME_MSG);
-        session.getDisplayer().pause();
+        session.getController().printTitle(WELCOME_MSG);
+        session.getController().pause();
         while (stage != null){
             stage = stage.execute(session);
         }
-        session.getDisplayer().printTitle("Thank you for playing!");
-        session.getDisplayer().pause();
+        session.getController().printTitle("Thank you for playing!");
+        session.getController().pause();
     }
 }

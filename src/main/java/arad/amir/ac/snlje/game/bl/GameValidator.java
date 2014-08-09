@@ -15,25 +15,31 @@ import java.util.Set;
  */
 public class GameValidator{
     private static final Logger log = LoggerFactory.getLogger(GameValidator.class);
+    private final Collection<String> errors;
+    private final Game game;
 
-    public Collection<String> validateGame(Game game){
-        Collection<String> errors = new LinkedList<>();
-        validateGame(game, errors);
-        return errors;
+    private GameValidator(Game game) {
+        this.game = game;
+        errors = new LinkedList<>();
     }
 
-    public void validateGame(Game game, Collection<String> errors){
-        if (game.getPlayers() == null){
-            errors.add("no players object defined");
-        } else {
-            validatePlayers(game, errors);
-            validateCurrentTurn(game, errors);
+    public static boolean validateGame(Game game, ControllerSession displayer) {
+        return new GameValidator(game).validateGame(displayer);
+    }
+
+    private boolean validateGame(ControllerSession displayer){
+        validatePlayers();
+        validateCurrentTurn();
+        validateWinningConditions();
+        validateBoard();
+        if (errors.isEmpty()) {
+            return true;
         }
-        validateWinningConditions(game, errors);
-        validateBoard(game, errors);
+        displayer.printErrors("Illegal input detected", errors);
+        return false;
     }
 
-    private void validateBoard(Game game, Collection<String> errors) {
+    private void validateBoard() {
         if (game.getBoard() == null){
             errors.add("no board object defined");
         } else {
@@ -43,18 +49,18 @@ public class GameValidator{
             } else if (size < Board.MIN_SIZE){
                 errors.add("bad board size: too low " + size);
             }
-            validateNumberOfCells(game, errors);
-            validatePassages(game, errors);
+            validateNumberOfCells();
+            validatePassages();
         }
     }
 
-    private void validatePassages(Game game, Collection<String> errors) {
+    private void validatePassages() {
         Set<Passage> snakes = new HashSet<>();
         Set<Passage> ladders = new HashSet<>();
         Set<Cell> pasageEdges = new HashSet<>(game.getBoard().getPassages().size() * 2);
         for (Passage passage : game.getBoard().getPassages()) {
             Set<Passage> typeCollection = getPassageTypeCollection(snakes, ladders, passage);
-            validatePassage(errors, passage, typeCollection, pasageEdges, game.getBoard().getCells().size());
+            validatePassage(passage, typeCollection, pasageEdges, game.getBoard().getCells().size());
             if (!game.getBoard().getCells().contains(passage.getFrom())){
                 errors.add("passage starts in a cell not referenced by the board");
             }
@@ -67,11 +73,11 @@ public class GameValidator{
         }
         int idx = 0;
         for (Cell cell : game.getBoard().getCells()) {
-            validateCell(errors, snakes, ladders, idx++, cell);
+            validateCell(snakes, ladders, idx++, cell);
         }
     }
 
-    private int validateCell(Collection<String> errors, Set<Passage> snakes, Set<Passage> ladders, int idx, Cell cell) {
+    private int validateCell(Set<Passage> snakes, Set<Passage> ladders, int idx, Cell cell) {
         if (idx != cell.getIndex()){
             errors.add("wrong cell index (should be "+idx+"): " + cell);
         }
@@ -88,7 +94,7 @@ public class GameValidator{
         return idx;
     }
 
-    private void validatePassage(Collection<String> errors, Passage passage, Set<Passage> typeCollection, Set<Cell> pasageEdges, int numOfCells) {
+    private void validatePassage(Passage passage, Set<Passage> typeCollection, Set<Cell> pasageEdges, int numOfCells) {
         if (!typeCollection.add(passage)){
             errors.add("duplicate passage found : " + passage);
         }
@@ -141,7 +147,7 @@ public class GameValidator{
         throw new IllegalArgumentException("unexpected type : " + passage.getType());
     }
 
-    private void validateNumberOfCells(Game game, Collection<String> errors) {
+    private void validateNumberOfCells() {
         int numberOfCells = new HashSet<>(game.getBoard().getCells()).size();
         if (numberOfCells < game.getBoard().getCells().size()){
             errors.add("duplicate cells found");
@@ -152,35 +158,39 @@ public class GameValidator{
         }
     }
 
-    private void validatePlayers(Game game, Collection<String> errors) {
-        int numberOfPlayers =  new HashSet<>(game.getPlayers()).size();
-        if (numberOfPlayers < game.getPlayers().size()){
-            errors.add("duplicate players found ");
-        }
-        if (numberOfPlayers > Game.MAX_NUM_OF_PLAYERS){
-            errors.add("bad number of players: too high " + numberOfPlayers);
-        } else if (numberOfPlayers < Game.MIN_NUM_OF_PLAYERS){
-            errors.add("bad number of players: too low " + numberOfPlayers);
-        }
-        for (Player player : game.getPlayers()) {
-            if (player.getName() == null || player.getName().isEmpty()){
-                errors.add("nameless player");
+    private void validatePlayers() {
+        if (game.getPlayers() == null) {
+            errors.add("no players object defined");
+        } else {
+            int numberOfPlayers = new HashSet<>(game.getPlayers()).size();
+            if (numberOfPlayers < game.getPlayers().size()) {
+                errors.add("duplicate players found ");
             }
-            if (player.getSoldierPositions() == null){
-                errors.add("null soldiers for player " + player.getName());
-            } else {
-                if (player.getSoldierPositions().size() != Game.NUMBER_OF_SOLDIERS){
-                    errors.add("bad number of soldiers for player: " + player);
+            if (numberOfPlayers > Game.MAX_NUM_OF_PLAYERS) {
+                errors.add("bad number of players: too high " + numberOfPlayers);
+            } else if (numberOfPlayers < Game.MIN_NUM_OF_PLAYERS) {
+                errors.add("bad number of players: too low " + numberOfPlayers);
+            }
+            for (Player player : game.getPlayers()) {
+                if (player.getName() == null || player.getName().isEmpty()) {
+                    errors.add("nameless player");
                 }
-                for (Cell cell : player.getSoldierPositions()) {
-                    if (cell == null){
+                if (player.getSoldierPositions() == null) {
+                    errors.add("null soldiers for player " + player.getName());
+                } else {
+                    if (player.getSoldierPositions().size() != Game.NUMBER_OF_SOLDIERS) {
                         errors.add("bad number of soldiers for player: " + player);
-                    } else {
-                        if (!game.getBoard().getCells().contains(cell)) {
-                            errors.add(player.getName() +"'s solider on cell not from this board: " + cell);
-                        }
-                        if (cell.getToPassage() != null) {
-                            errors.add(player.getName() +"'s solider on cell that leads to a " + cell.getToPassage().getType().toString().toLowerCase() + " : " + cell);
+                    }
+                    for (Cell cell : player.getSoldierPositions()) {
+                        if (cell == null) {
+                            errors.add("bad number of soldiers for player: " + player);
+                        } else {
+                            if (!game.getBoard().getCells().contains(cell)) {
+                                errors.add(player.getName() + "'s solider on cell not from this board: " + cell);
+                            }
+                            if (cell.getToPassage() != null) {
+                                errors.add(player.getName() + "'s solider on cell that leads to a " + cell.getToPassage().getType().toString().toLowerCase() + " : " + cell);
+                            }
                         }
                     }
                 }
@@ -188,8 +198,7 @@ public class GameValidator{
         }
     }
 
-
-    private void validateWinningConditions(Game game, Collection<String> errors) {
+    private void validateWinningConditions() {
         if (game.getNumberOfSoldiersToWin() > Game.MAX_WINNING_CONDITION){
             errors.add("bad winning condition: too high " + game.getNumberOfSoldiersToWin());
         } else if (game.getNumberOfSoldiersToWin() < Game.MIN_WINNING_CONDITION){
@@ -197,7 +206,7 @@ public class GameValidator{
         }
     }
 
-    private void validateCurrentTurn(Game game, Collection<String> errors) {
+    private void validateCurrentTurn() {
         if (game.getCurrentTurn() >= game.getPlayers().size()){
             errors.add("bad turn index: too high " + game.getCurrentTurn());
         } else if (game.getCurrentTurn() < 0){

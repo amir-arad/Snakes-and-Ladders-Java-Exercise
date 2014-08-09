@@ -4,13 +4,11 @@ import arad.amir.ac.snlje.game.model.Board;
 import arad.amir.ac.snlje.game.model.Game;
 import arad.amir.ac.snlje.game.model.Passage;
 import arad.amir.ac.snlje.game.model.Player;
-import org.junit.Assert;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class GameBuilderTest {
@@ -26,7 +24,7 @@ public class GameBuilderTest {
     public void testValidBuild() throws Exception {
         log.debug("starting");
         for (int i = 0; i < 10000; i++) {
-            testValidGame(buildRandomGame(false));
+            GameValidatorTest.testValidGame(buildRandomGame(false));
         }
         log.debug("done");
     }
@@ -36,21 +34,11 @@ public class GameBuilderTest {
     public void testValidSampleXml() throws Exception {
         log.debug("starting");
         for (int i = 0; i < 10000; i++) {
-            testValidGame(buildRandomGame(false));
+            GameValidatorTest.testValidGame(buildRandomGame(false));
         }
         log.debug("done");
     }
 
-    private void testValidGame(Game game) {
-        GameValidator validator = new GameValidator();
-        Collection<String> strings = validator.validateGame(game);
-        if (!strings.isEmpty()){
-            for (String string : strings) {
-                log.error(string);
-            }
-            Assert.fail("validation failed : " + strings);
-        }
-    }
 
     public static Game buildRandomGame(boolean newGame) {
         int boardSize = randInRange(Board.MIN_SIZE, Board.MAX_SIZE);
