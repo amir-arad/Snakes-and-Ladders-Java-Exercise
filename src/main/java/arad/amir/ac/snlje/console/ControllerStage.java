@@ -42,7 +42,7 @@ enum ControllerStage {
             session.getController().printTitle("configuring new game");
             GameBuilder builder = new GameBuilder();
             builder.setBoardSize(session.getController().inputInteger("choose board size", Board.MIN_SIZE, Board.MAX_SIZE));
-            int maxPassages = (builder.getBoardSize() * builder.getBoardSize() / 2 - 1) / 2;
+            int maxPassages = Board.calcMaxPassages(builder.getBoardSize());
             builder.setNumOfPassages(session.getController().inputInteger("choose number of passages", 0, maxPassages));
             builder.setNewGame(true);
             builder.setWinningCondition(session.getController().inputInteger("choose winning conditions", Game.MIN_WINNING_CONDITION, Game.MAX_WINNING_CONDITION));

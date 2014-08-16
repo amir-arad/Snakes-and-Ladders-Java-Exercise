@@ -2,9 +2,9 @@ package arad.amir.ac.snlje.windowed.controllers;
 
 import arad.amir.ac.snlje.game.bl.ControllerSession;
 import arad.amir.ac.snlje.game.bl.GameSession;
+import arad.amir.ac.snlje.game.model.Passage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import org.slf4j.Logger;
@@ -24,6 +24,7 @@ public class ControllersManager implements Callback<Class<?>, Object>, Controlle
     private final Stage primaryStage;
 
     private PrimaryStageController primaryStageController;
+    private GameScreenController gameScreenController;
 
     public ControllersManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -37,20 +38,46 @@ public class ControllersManager implements Callback<Class<?>, Object>, Controlle
             return primaryStageController;
         } else if (type.equals(AboutController.class)){
             return new AboutController(session);
+        } else if (type.equals(GameScreenController.class)){
+            gameScreenController = new GameScreenController(session);
+            return gameScreenController;
+        } else if (type.equals(NewGameController.class)){
+            return new NewGameController(session);
+        } else if (type.equals(NewPlayerController.class)){
+            return new NewPlayerController(session);
         } else {
             throw new IllegalArgumentException("unexpected controller type : " + type.getName());
         }
     }
 
-    public Scene fxmlLoad(String fileName) throws IOException {
+    public Parent fxmlLoad(String fileName) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(this);
-        Parent load = (Parent) fxmlLoader.load(getClass().getClassLoader().getResourceAsStream(fileName));
-        return new Scene(load);
+        fxmlLoader.setLocation(getClass().getClassLoader().getResource(fileName));
+        return (Parent) fxmlLoader.load();
+    }
+
+    public PrimaryStageController getPrimaryStageController() {
+        return primaryStageController;
     }
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public void loadTurnData(){
+        gameScreenController.loadTurnData();
+     // todo load current player data to UI
+    }
+
+    public void handleDieRoll(int dieRoll){
+        // todo handleDieRoll
+    }
+
+    public void handlePlayerChoice(int cellIndex){
+        Passage passage = session.getManager().playTurn(cellIndex);
+        gameScreenController.handlePlayerChoice(passage);
+        // TODO handle player choice
     }
 
     @Override

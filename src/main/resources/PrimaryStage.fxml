@@ -7,31 +7,31 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arad.amir.ac.snlje.windowed.controllers.PrimaryStageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="686.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arad.amir.ac.snlje.windowed.controllers.PrimaryStageController">
 
    <children>
       <MenuBar id="top_menu" fx:id="topMenu">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-                  <MenuItem mnemonicParsing="false" text="New" onAction="#handleNew">
+                  <MenuItem mnemonicParsing="false" onAction="#handleNew" text="New">
                      <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="N" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination control="DOWN" code="N" alt="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Open" onAction="#handleLoad">
+                  <MenuItem mnemonicParsing="false" onAction="#handleLoad" text="Open">
                      <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="O" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination control="DOWN" code="O" alt="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-                  <MenuItem mnemonicParsing="false" text="Save" onAction="#handleSave">
+                  <MenuItem mnemonicParsing="false" onAction="#handleSave" text="Save">
                      <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination control="DOWN" code="S" alt="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
-              <MenuItem mnemonicParsing="false" text="Close" onAction="#handleExit">
+              <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Close">
                      <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="X" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination control="DOWN" code="X" alt="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
             </items>
@@ -40,18 +40,20 @@
             <items>
               <MenuItem mnemonicParsing="false" onAction="#handleTopMenuAbout" text="About">
                      <accelerator>
-                        <KeyCodeCombination alt="DOWN" code="A" control="UP" meta="UP" shift="UP" shortcut="UP" />
+                        <KeyCodeCombination control="DOWN" code="A" alt="UP" meta="UP" shift="UP" shortcut="UP" />
                      </accelerator>
                   </MenuItem>
             </items>
           </Menu>
         </menus>
       </MenuBar>
-       <Label fx:id="errorMessageLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="21.0" text="" textAlignment="CENTER" textFill="RED" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="62.0">
+       <Label fx:id="errorMessageLabel" alignment="CENTER" maxWidth="1.7976931348623157E308" minHeight="-Infinity" prefHeight="21.0" text="" textAlignment="CENTER" textFill="RED" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="101.0" AnchorPane.topAnchor="62.0">
            <font>
                <Font name="System Bold" size="12.0" />
            </font>
        </Label>
-      <AnchorPane id="main_screen" fx:id="mainScreen" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
+      <VBox id="main_screen" fx:id="mainScreen" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="640.0" prefWidth="800.0" >
+          <children/>
+      </VBox>
    </children>
 </VBox>

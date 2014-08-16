@@ -2,6 +2,8 @@ package arad.amir.ac.snlje.windowed.controllers;
 
 import arad.amir.ac.snlje.game.bl.GameSession;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -21,7 +23,8 @@ public class AboutController extends AbsController {
         super(session);
     }
 
-    public void onClose(ActionEvent event) {
+    @FXML
+    private void onClose(ActionEvent event) {
         getWindow(event).hide();
     }
 
@@ -30,7 +33,7 @@ public class AboutController extends AbsController {
         aboutStage.initModality(Modality.APPLICATION_MODAL);
         aboutStage.initStyle(StageStyle.UTILITY);
         aboutStage.initOwner(manager.getPrimaryStage());
-        aboutStage.setScene(manager.fxmlLoad("about.fxml"));
+        aboutStage.setScene(new Scene(manager.fxmlLoad("About.fxml")));
         aboutStage.show();
     }
 

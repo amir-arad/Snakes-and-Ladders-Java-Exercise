@@ -1,6 +1,7 @@
 package arad.amir.ac.snlje.windowed;
 
 import arad.amir.ac.snlje.windowed.controllers.ControllersManager;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ public class Application extends javafx.application.Application {
     public void start(Stage primaryStage) throws Exception{
         ControllersManager manager = new ControllersManager(primaryStage);
         primaryStage.setTitle("Snakes and Ladders - Amir Arad");
-        primaryStage.setScene(manager.fxmlLoad("PrimaryStage.fxml"));
+        primaryStage.setScene(new Scene(manager.fxmlLoad("PrimaryStage.fxml")));
         primaryStage.show();
     }
 

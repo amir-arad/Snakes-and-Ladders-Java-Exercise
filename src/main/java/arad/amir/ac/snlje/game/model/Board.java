@@ -19,10 +19,19 @@ public class Board {
 
     public static final int MIN_SIZE = 5;
     public static final int MAX_SIZE = 8;
+    public static final int CELLS_PER_PASSAGE = 2;
+    private static final int NUMBER_OF_FIRST_AND_LAST_CELLS = 2;
 
     private int size;
     private List<Cell> cells;
     private Collection<Passage> passages;
+
+    public static int calcMaxPassages(int boardSize){
+        int numOfCells = boardSize * boardSize;
+        numOfCells -= NUMBER_OF_FIRST_AND_LAST_CELLS;
+        int numOfPassages = numOfCells / CELLS_PER_PASSAGE;
+        return numOfPassages / Passage.Type.values().length;
+    }
 
     public int getSize() {
         return size;

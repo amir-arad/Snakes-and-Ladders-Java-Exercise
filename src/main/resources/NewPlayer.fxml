@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+
+<GridPane fx:id="container" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="125.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="arad.amir.ac.snlje.windowed.controllers.NewPlayerController">
+
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="10.0" prefWidth="80.0" />
+        <ColumnConstraints hgrow="SOMETIMES" maxWidth="270.0" minWidth="0.0" prefWidth="25.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints maxHeight="29.0" minHeight="22.0" prefHeight="28.0" vgrow="ALWAYS" />
+        <RowConstraints maxHeight="75.0" minHeight="10.0" prefHeight="27.0" vgrow="ALWAYS" />
+        <RowConstraints maxHeight="75.0" minHeight="0.0" prefHeight="26.0" vgrow="ALWAYS" />
+        <RowConstraints maxHeight="216.0" minHeight="10.0" prefHeight="37.0" vgrow="ALWAYS" />
+        <RowConstraints maxHeight="205.0" minHeight="10.0" prefHeight="29.0" vgrow="ALWAYS" />
+    </rowConstraints>
+    <padding>
+        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+    </padding>
+    <children>
+        <Label fx:id="title" text="X player" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+        <ImageView fx:id="image" fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="125.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+            <children>
+                <RadioButton id="disable" mnemonicParsing="false" onAction="#onTypeSelect" selected="true" text="Disable">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="playerType" />
+                    </toggleGroup>
+                </RadioButton>
+            </children>
+        </HBox>
+
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="125.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2">
+            <children>
+                <RadioButton id="human" mnemonicParsing="false" onAction="#onTypeSelect" text="Human" toggleGroup="$playerType" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="125.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="3">
+            <children>
+                <RadioButton id="computer" mnemonicParsing="false" onAction="#onTypeSelect" text="Computer" toggleGroup="$playerType" />
+            </children>
+        </HBox>
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="125.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="4">
+            <children>
+                <TextField fx:id="name" maxWidth="1.7976931348623157E308" promptText="Enter Name Here" />
+            </children>
+        </HBox>
+    </children>
+</GridPane>

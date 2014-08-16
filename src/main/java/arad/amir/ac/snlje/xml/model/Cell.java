@@ -21,7 +21,7 @@ import java.util.List;
  *           &lt;complexType>
  *             &lt;complexContent>
  *               &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *                 &lt;attribute name="playerName" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *                 &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
  *                 &lt;attribute name="count" use="required">
  *                   &lt;simpleType>
  *                     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}positiveInteger">
@@ -117,7 +117,7 @@ public class Cell {
      * &lt;complexType>
      *   &lt;complexContent>
      *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
-     *       &lt;attribute name="playerName" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
+     *       &lt;attribute name="name" use="required" type="{http://www.w3.org/2001/XMLSchema}string" />
      *       &lt;attribute name="count" use="required">
      *         &lt;simpleType>
      *           &lt;restriction base="{http://www.w3.org/2001/XMLSchema}positiveInteger">
@@ -137,13 +137,13 @@ public class Cell {
     @XmlType(name = "")
     public static class Soldiers {
 
-        @XmlAttribute(name = "playerName", required = true)
+        @XmlAttribute(name = "name", required = true)
         protected String playerName;
         @XmlAttribute(name = "count", required = true)
         protected int count;
 
         /**
-         * Gets the value of the playerName property.
+         * Gets the value of the name property.
          * 
          * @return
          *     possible object is
@@ -155,7 +155,7 @@ public class Cell {
         }
 
         /**
-         * Sets the value of the playerName property.
+         * Sets the value of the name property.
          * 
          * @param value
          *     allowed object is
