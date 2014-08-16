@@ -1,5 +1,6 @@
 package arad.amir.ac.snlje.console;
 
+import arad.amir.ac.snlje.game.bl.GameManager;
 import arad.amir.ac.snlje.game.bl.GameSession;
 import arad.amir.ac.snlje.game.bl.GameBuilder;
 import arad.amir.ac.snlje.game.model.Board;
@@ -210,7 +211,9 @@ enum ControllerStage {
                 default:
                     throw new IllegalArgumentException("unknown player type : " + player);
             }
-            Passage passageUsed = session.getManager().playTurn(choice);
+            GameManager.Move move = session.getManager().calcMove(choice);
+            session.getManager().executeMove(move);
+            Passage passageUsed = move.getThrough();
             if (player.getType() == Player.Type.COMPUTER) {
                 session.getController().printTitle(player.getName() + " rolled " + dieRoll + " and chose to move a soldier from " + (choice + 1));
                 if (passageUsed != null){

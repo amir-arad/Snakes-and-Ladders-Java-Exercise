@@ -68,23 +68,24 @@ public class NewPlayerController extends AbsController{
         });
     }
 
-
     public void setEnabled(boolean enabled) {
         container.setVisible(enabled);
-        reportActivePlayer();
+        calcPlayerStatus();
     }
 
     public void onTypeSelect(ActionEvent actionEvent) {
         player.setType(getType((RadioButton) actionEvent.getSource()).blType);
-        reportActivePlayer();
+        calcPlayerStatus();
     }
 
-    private void reportActivePlayer() {
+    private void calcPlayerStatus() {
+        name.setDisable(player.getType() == null);
         newGameController.handlePlayerActive(color, container.isVisible() && player.getType() != null);
     }
 
     private void setName(String name) {
         player.setName(name);
+        calcPlayerStatus();
     }
 
     public Player getPlayer() {

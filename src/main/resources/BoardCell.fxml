@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="cellPane" maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="80.0" minWidth="80.0"
+            onMouseClicked="#mouseClick" onMouseEntered="#mouseEntered" onMouseExited="#mouseExited"
+            prefHeight="80.0" prefWidth="80.0" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="arad.amir.ac.snlje.windowed.controllers.GameBoardCellController">
+    <children>
+        <ImageView fx:id="solider00" fitHeight="32.0" fitWidth="20.0" layoutX="00.0" layoutY="00.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider01" fitHeight="32.0" fitWidth="20.0" layoutX="00.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider02" fitHeight="32.0" fitWidth="20.0" layoutX="00.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider03" fitHeight="32.0" fitWidth="20.0" layoutX="00.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+
+        <ImageView fx:id="solider10" fitHeight="32.0" fitWidth="20.0" layoutX="20.0" layoutY="00.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider11" fitHeight="32.0" fitWidth="20.0" layoutX="20.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider12" fitHeight="32.0" fitWidth="20.0" layoutX="20.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider13" fitHeight="32.0" fitWidth="20.0" layoutX="20.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+
+        <ImageView fx:id="solider20" fitHeight="32.0" fitWidth="20.0" layoutX="40.0" layoutY="00.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider21" fitHeight="32.0" fitWidth="20.0" layoutX="40.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider22" fitHeight="32.0" fitWidth="20.0" layoutX="40.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider23" fitHeight="32.0" fitWidth="20.0" layoutX="40.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+
+        <ImageView fx:id="solider30" fitHeight="32.0" fitWidth="20.0" layoutX="60.0" layoutY="00.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider31" fitHeight="32.0" fitWidth="20.0" layoutX="60.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider32" fitHeight="32.0" fitWidth="20.0" layoutX="60.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+        <ImageView fx:id="solider33" fitHeight="32.0" fitWidth="20.0" layoutX="60.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
+            <viewport>
+                <Rectangle2D height="32.0" width="20.0" />
+            </viewport>
+        </ImageView>
+    </children>
+</AnchorPane>

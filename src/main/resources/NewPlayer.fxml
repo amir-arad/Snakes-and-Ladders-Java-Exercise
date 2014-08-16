@@ -23,8 +23,8 @@
         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
     </padding>
     <children>
-        <Label fx:id="title" text="X player" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-        <ImageView fx:id="image" fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" GridPane.rowIndex="0" GridPane.columnIndex="1" />
+        <Label fx:id="title" text="X player" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+        <ImageView fx:id="image" fitHeight="30.0" fitWidth="28.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="125.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="1">
             <children>
                 <RadioButton id="disable" mnemonicParsing="false" onAction="#onTypeSelect" selected="true" text="Disable">
@@ -47,7 +47,7 @@
         </HBox>
         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="125.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="4">
             <children>
-                <TextField fx:id="name" maxWidth="1.7976931348623157E308" promptText="Enter Name Here" />
+                <TextField fx:id="name" disable="true" maxWidth="1.7976931348623157E308" promptText="Enter Name Here" />
             </children>
         </HBox>
     </children>

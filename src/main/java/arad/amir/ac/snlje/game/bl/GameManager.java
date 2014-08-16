@@ -28,6 +28,36 @@ public class GameManager {
     private int lastCellNumber;
     private Player winner;
 
+    public static class Move {
+        private final Player who;
+        private final Cell from;
+        private final Passage through;
+        private final Cell to;
+
+        public Move(Player who, Cell from, Passage through, Cell to) {
+            this.who = who;
+            this.from = from;
+            this.through = through;
+            this.to = to;
+        }
+
+        public Player getWho() {
+            return who;
+        }
+
+        public Cell getFrom() {
+            return from;
+        }
+
+        public Passage getThrough() {
+            return through;
+        }
+
+        public Cell getTo() {
+            return to;
+        }
+    }
+
     public GameManager(Game game) {
         this.game = game;
         lastCellNumber = game.getBoard().getCells().size();
@@ -53,7 +83,7 @@ public class GameManager {
         return result;
     }
 
-    public Passage playTurn(int cellIndexOfSoliderToMove){
+    public Move calcMove(int cellIndexOfSoliderToMove){
         if (winner != null){
             throw new IllegalStateException("game already won by " + winner.getName());
         }
@@ -62,20 +92,23 @@ public class GameManager {
         if (!player.getSoldierPositions().contains(cellOfSoliderToMove)){
             throw new IllegalArgumentException("wrong soldier cell index " + cellIndexOfSoliderToMove + " for player " + player);
         }
-        player.getSoldierPositions().remove(cellOfSoliderToMove);
         int newPositionIndex = Math.min(
                 cellIndexOfSoliderToMove + dieRoll,
                 lastCellNumber - 1);
         Cell destination = game.getBoard().getCells().get(newPositionIndex);
-        Passage result = destination.getToPassage();
-        if (result != null){
-            destination = result.getTo();
+        Passage p = destination.getToPassage();
+        if (p != null){
+            destination = p.getTo();
         }
-        player.getSoldierPositions().add(destination);
+        return new Move(player, cellOfSoliderToMove, p, destination);
+    }
+
+    public void executeMove(Move move){
+        move.getWho().getSoldierPositions().remove(move.getFrom());
+        move.getWho().getSoldierPositions().add(move.getTo());
         dieRoll = NULL_DIE_ROLL;
         calculateWinner();
         game.setCurrentTurn((game.getCurrentTurn() + 1) % game.getPlayers().size());
-        return result;
     }
 
     public Player getCurrentPlayer() {

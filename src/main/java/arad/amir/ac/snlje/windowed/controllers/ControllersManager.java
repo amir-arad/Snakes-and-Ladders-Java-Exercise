@@ -1,8 +1,9 @@
 package arad.amir.ac.snlje.windowed.controllers;
 
 import arad.amir.ac.snlje.game.bl.ControllerSession;
+import arad.amir.ac.snlje.game.bl.GameManager;
 import arad.amir.ac.snlje.game.bl.GameSession;
-import arad.amir.ac.snlje.game.model.Passage;
+import arad.amir.ac.snlje.game.model.Player;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.stage.Stage;
@@ -11,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * @author amira
@@ -25,6 +28,7 @@ public class ControllersManager implements Callback<Class<?>, Object>, Controlle
 
     private PrimaryStageController primaryStageController;
     private GameScreenController gameScreenController;
+    private boolean waitingForPlayerChoice = false;
 
     public ControllersManager(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -45,6 +49,8 @@ public class ControllersManager implements Callback<Class<?>, Object>, Controlle
             return new NewGameController(session);
         } else if (type.equals(NewPlayerController.class)){
             return new NewPlayerController(session);
+        } else if (type.equals(GameBoardCellController.class)){
+            return new GameBoardCellController(session);
         } else {
             throw new IllegalArgumentException("unexpected controller type : " + type.getName());
         }
@@ -54,7 +60,9 @@ public class ControllersManager implements Callback<Class<?>, Object>, Controlle
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setControllerFactory(this);
         fxmlLoader.setLocation(getClass().getClassLoader().getResource(fileName));
-        return (Parent) fxmlLoader.load();
+        Parent result = (Parent) fxmlLoader.load();
+        result.setUserData(fxmlLoader.getController());
+        return result;
     }
 
     public PrimaryStageController getPrimaryStageController() {
@@ -66,18 +74,32 @@ public class ControllersManager implements Callback<Class<?>, Object>, Controlle
     }
 
     public void loadTurnData(){
-        gameScreenController.loadTurnData();
-     // todo load current player data to UI
+        Player player = session.getManager().getCurrentPlayer();
+        switch(player.getType()){
+            case HUMAN:
+                gameScreenController.loadTurnData();
+                break;
+            case COMPUTER:
+                List <Integer> movementChoices = new ArrayList<>(session.getManager().getCurrentPlayerSoliderCellIndexes());
+                int choice = movementChoices.get((int) (Math.random() * movementChoices.size()));
+                GameManager.Move move = session.getManager().calcMove(choice);
+                handlePlayerChoice(move);
+                // TODO add pause
+                break;
+            default:
+                throw new IllegalArgumentException("unknown player type : " + player);
+        }
     }
 
     public void handleDieRoll(int dieRoll){
-        // todo handleDieRoll
+        waitingForPlayerChoice = true;
     }
 
-    public void handlePlayerChoice(int cellIndex){
-        Passage passage = session.getManager().playTurn(cellIndex);
-        gameScreenController.handlePlayerChoice(passage);
-        // TODO handle player choice
+    public void handlePlayerChoice(GameManager.Move move){
+        waitingForPlayerChoice = false;
+        session.getManager().executeMove(move);
+        gameScreenController.handlePlayerChoice(move);
+        loadTurnData();
     }
 
     @Override
@@ -94,4 +116,5 @@ public class ControllersManager implements Callback<Class<?>, Object>, Controlle
     public void clearError() {
         primaryStageController.clearError();
     }
+
 }
